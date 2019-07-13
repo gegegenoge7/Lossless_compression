@@ -1,4 +1,14 @@
-﻿using System;
+﻿/******************************************************************************
+ * Name: Compress_RLE.cs
+ * Made By: Hayato Yokoyama
+ * This class will be called via compress_with_RLE, and will compress the 
+ * file via RLE. It will read the file in binary, and will convert it into a
+ * text file with a string that represents how many 1's and 0's there were,
+ * starting with the number of 0's.
+ * The runtime of this program is O(n), n being the number of bits in the file.
+******************************************************************************/
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,7 +19,7 @@ namespace Compressions
 {
     class Compress_RLE
     {
-        void compress_with_RLE(string InputFilename, string OutputFilename) {
+        public void compress_with_RLE(string InputFilename, string OutputFilename) {
             byte[] fileBytes = File.ReadAllBytes(InputFilename);
             StringBuilder string_fileBytes = new StringBuilder();
             foreach (byte b in fileBytes) {
@@ -19,14 +29,12 @@ namespace Compressions
             counted_binary.Add(0);
             counted_binary = compress(string_fileBytes, 0, counted_binary);
             StringBuilder compressed_fileBytes = new StringBuilder();
-            bool binary = false;
             foreach (int count in counted_binary) {
-                string IntConversion = (binary ? 1 : 0).ToString();
-                compressed_fileBytes.Append(IntConversion + count.ToString());
+                compressed_fileBytes.Append(count.ToString() + "_");
             }
             File.WriteAllText(OutputFilename, compressed_fileBytes.ToString());
         }
-        List<int> compress(StringBuilder string_fileBytes, int last_binary, List<int> counted_binary) {
+        private List<int> compress(StringBuilder string_fileBytes, int last_binary, List<int> counted_binary) {
             StringBuilder compressed_fileBytes = new StringBuilder();
             if (0 == string_fileBytes.Length)
             {
@@ -51,7 +59,7 @@ namespace Compressions
                         counted_binary.Add(1);
                     }
                 }
-                return compress(string_fileBytes, last_binary, counted_binary);
+                return compress(string_fileBytes.Remove(0,1), last_binary, counted_binary);
             }
         }
     }

@@ -13,11 +13,10 @@ namespace Compressions
         private byte[] compressed_fileByte;
         private StringBuilder compressed_binary_string;
 
-        void compress_with_Huffman(string InputFilename, string OutputFilename)
+        public void compress_with_Huffman(string InputFilename, string OutputFilename)
         {
             frequency_list = new List<char_freq>();
             string fileString = File.ReadAllText(InputFilename);
-            byte[] fileByte = File.ReadAllBytes(InputFilename);
             create_char_freq(fileString);
             char_freq root = create_huffman_tree();
             compress(fileString, root);
@@ -29,9 +28,9 @@ namespace Compressions
                 compressed_fileByte[i] = Convert.ToByte(compressed_binary_string.ToString().Substring(8 * i, 8), 2);
             }
             File.WriteAllBytes(OutputFilename, compressed_fileByte);
-            File.AppendAllText(OutputFilename, String_rep_tree.ToString());
+            File.WriteAllText("HuffmanTreeData_" + OutputFilename, String_rep_tree.ToString());
         }
-        void create_char_freq(string fileString)
+        private void create_char_freq(string fileString)
         {
             foreach (char c in fileString)
             {
@@ -51,45 +50,93 @@ namespace Compressions
                 }
             }
         }
-        char_freq create_huffman_tree()
+        private char_freq create_huffman_tree()
         {
             frequency_list = frequency_list.OrderBy(f => f.Count).ToList();
             char_freq root = new char_freq();
             int index = 0;
-            while (index+1 < frequency_list.Count())
+            int Num_entries = frequency_list.Count();
+            while (index+1 < Num_entries)
             {
-                char_freq newNode = new char_freq(frequency_list[index], frequency_list[index+1]);
+                char_freq newNode = new char_freq(frequency_list[index], frequency_list[index+1], frequency_list);
                 frequency_list.Add(newNode);//add to correct place
                 root = newNode;
                 index += 2;
+                Num_entries = frequency_list.Count();
             }
             return root;
         }
-        void compress(string fileString, char_freq root)
+        private void compress(string fileString, char_freq root)
         {
             compressed_binary_string = new StringBuilder();
             foreach (char c in fileString)
             {
-
                 char_freq node = frequency_list.Find(f => f.ID == c);
+                string tempString = "";
                 while (node != root)
                 {
-                    char_freq tempNode = node.ParentNode;
-                    if (tempNode.LeftNode == node)
+                    char_freq tempNode = frequency_list[node.ParentNodeIndex];
+                    if (frequency_list[tempNode.LeftNodeIndex] == node)
                     {
-                        compressed_binary_string.Append('1');
+                        tempString = '1' + tempString;
                     }
-                    if (tempNode.RightNode == node)
+                    if (frequency_list[tempNode.RightNodeIndex] == node)
                     {
-                        compressed_binary_string.Append('0');
+                        tempString = '0' + tempString;
                     }
                     node = tempNode;
                 }
+                compressed_binary_string.Append(tempString);
             }
         }
-        void convert_tree()
+        private StringBuilder convert_tree()
         {
+            StringBuilder treeString = new StringBuilder();
+            int index = 0;
+            foreach (char_freq entry in frequency_list)
+            {
+                treeString.AppendLine(index + "," + entry.ID + "," + entry.Count + "," + entry.ParentNodeIndex + "," + entry.LeftNodeIndex + "," + entry.RightNodeIndex);
+                index++;
+            }
+            return treeString;
+        }
+        private void Uncompress_with_Huffman(string InputFilename, string InputTreeFilename, string OutputFilename)
+        {
+            byte[] CompressedFileByte = File.ReadAllBytes(InputFilename);
+            string[] Huffman_tree = File.ReadAllLines(InputTreeFilename);
 
+            frequency_list = new List<char_freq>();
+            foreach (string Huffman_node in Huffman_tree)
+            {
+                string[] node_info = Huffman_node.Split(',');
+                char_freq newNode = new char_freq();//add correctly
+                frequency_list.Add(newNode);
+            }
+            int index = 0;
+            StringBuilder CompressedByteString = new StringBuilder();
+            foreach (byte b in CompressedFileByte)
+            {
+                CompressedByteString.Append(Convert.ToString(b, 2).PadLeft(8, '0'));
+            }
+            StringBuilder Uncompressed_fileString = new StringBuilder();
+            char_freq traversal = ;//find root - make variable so that we know the type of node it is - add node, char node, or root node
+            while (index < CompressedByteString.Length)
+            {
+                if ((traversal.LeftNodeIndex == ) && (traversal.RightNodeIndex == ))//if this is a edge node
+                {
+                    Uncompressed_fileString.Append(traversal.ID);
+                }
+                if (CompressedByteString[index] == '1')
+                {
+                    traversal = frequency_list[traversal.RightNodeIndex];
+                    index++;
+                }
+                else
+                {
+                    traversal = frequency_list[traversal.LeftNodeIndex];
+                    index++;
+                }
+            }
         }
     }
 }

@@ -8,9 +8,9 @@ namespace Compressions
 {
     class char_freq
     {
-        private char_freq left_node;//this shouldn't work
-        private char_freq right_node;//shouldn't work
-        private char_freq parent_node;//this shouldn't work
+        private int left_node_index;
+        private int right_node_index;
+        private int parent_node_index;
         private char iden;
         private int count;
         public char ID {
@@ -31,64 +31,58 @@ namespace Compressions
                 count = value;
             }
         }
-        public char_freq RightNode
+        public int RightNodeIndex
         {
             get
             {
-                return right_node;
+                return right_node_index;
             }
             set
             {
-                right_node = value;
+                right_node_index = value;
             }
         }
-        public char_freq LeftNode
+        public int LeftNodeIndex
         {
             get
             {
-                return left_node;
+                return left_node_index;
             }
             set
             {
-                left_node = value;
+                left_node_index = value;
             }
         }
-        public char_freq ParentNode
+        public int ParentNodeIndex
         {
             get
             {
-                return parent_node;
+                return parent_node_index;
             }
             set
             {
-                parent_node = value;
+                parent_node_index = value;
             }
         }
         public char_freq()
         {
-            left_node = null;
-            right_node = null;
         }
         public char_freq(char c)
         {
-            left_node = null;
-            right_node = null;
             iden = c;
             count = 1;
         }
         public char_freq(char c, int n)
         {
-            left_node = null;
-            right_node = null;
             iden = c;
             this.count = n;
         }
-        public char_freq(char_freq leftnode, char_freq rightnode)
+        public char_freq(char_freq leftnode, char_freq rightnode, List<char_freq> frequency_list)
         {
-            this.left_node = new char_freq(leftnode.ID, leftnode.Count);
-            this.right_node = new char_freq(rightnode.ID, rightnode.Count);
-            this.left_node.parent_node = this;
-            this.right_node.parent_node = this;
+            this.left_node_index = frequency_list.FindIndex(f => f == leftnode);
+            this.right_node_index = frequency_list.FindIndex(f => f == rightnode);
+            frequency_list[left_node_index].parent_node_index = frequency_list.FindIndex(f => f == this);
+            frequency_list[right_node_index].parent_node_index = frequency_list.FindIndex(f => f == this);
             this.count = leftnode.Count + rightnode.Count;
         }
     }

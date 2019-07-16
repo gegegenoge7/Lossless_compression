@@ -16,5 +16,10 @@ namespace Compressions
         {
             InitializeComponent();
         }
+
+        private void Input_browse_button_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

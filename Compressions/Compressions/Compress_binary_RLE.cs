@@ -17,7 +17,7 @@ using System.IO;
 
 namespace Compressions
 {
-    class Compress_RLE
+    class Compress_binary_RLE
     {
         public void compress_with_RLE(string InputFilename, string OutputFilename) {
             byte[] fileBytes = File.ReadAllBytes(InputFilename);
@@ -61,6 +61,33 @@ namespace Compressions
                 }
                 return compress(string_fileBytes.Remove(0,1), last_binary, counted_binary);
             }
+        }
+
+        public void uncompress_with_RLE(string InputFilename, string OutputFilename)
+        {
+            string fileString = File.ReadAllText(InputFilename);
+            string[] fileStringSplit = fileString.Split('_');
+
+            StringBuilder UncompressedFileString = new StringBuilder();
+            bool binaryBool = false;
+            foreach (string entry in fileStringSplit)
+            {
+                int binary = binaryBool ? 1 : 0;
+                int num = Convert.ToInt32(entry);
+                for (int i = 0; i < num; i++)
+                {
+                    UncompressedFileString.Append(binary);
+                }
+                binaryBool = !binaryBool;
+            }
+            int numBytes = UncompressedFileString.ToString().Length / 8;
+            byte[] Uncompressed_fileByte = new byte[numBytes];
+            for (int i = 0; i < numBytes; ++i)
+            {
+                Uncompressed_fileByte[i] = Convert.ToByte(UncompressedFileString.ToString().Substring(8 * i, 8), 2);
+            }
+
+            File.WriteAllBytes(OutputFilename, Uncompressed_fileByte);
         }
     }
 }

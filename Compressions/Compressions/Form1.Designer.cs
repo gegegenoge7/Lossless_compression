@@ -34,10 +34,11 @@
             this.output_folder_label = new System.Windows.Forms.Label();
             this.Input_file_textBox = new System.Windows.Forms.TextBox();
             this.Output_file_textBox = new System.Windows.Forms.TextBox();
-            this.c_RLE_binary_button = new System.Windows.Forms.Button();
-            this.c_RLE_BWT_button = new System.Windows.Forms.Button();
-            this.c_huffman_button = new System.Windows.Forms.Button();
-            this.c_arithmetic_button = new System.Windows.Forms.Button();
+            this.option_compress_comboBox = new System.Windows.Forms.ComboBox();
+            this.option_compress_label = new System.Windows.Forms.Label();
+            this.option_algorithm_textbox = new System.Windows.Forms.ComboBox();
+            this.choose_algorithm_label = new System.Windows.Forms.Label();
+            this.start_button = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // Input_browse_button
@@ -58,6 +59,7 @@
             this.browse_output_button.TabIndex = 1;
             this.browse_output_button.Text = "Browse...";
             this.browse_output_button.UseVisualStyleBackColor = true;
+            this.browse_output_button.Click += new System.EventHandler(this.browse_output_button_Click);
             // 
             // input_file_label
             // 
@@ -92,51 +94,69 @@
             this.Output_file_textBox.Size = new System.Drawing.Size(430, 22);
             this.Output_file_textBox.TabIndex = 5;
             // 
-            // c_RLE_binary_button
+            // option_compress_comboBox
             // 
-            this.c_RLE_binary_button.Location = new System.Drawing.Point(128, 281);
-            this.c_RLE_binary_button.Name = "c_RLE_binary_button";
-            this.c_RLE_binary_button.Size = new System.Drawing.Size(75, 55);
-            this.c_RLE_binary_button.TabIndex = 6;
-            this.c_RLE_binary_button.Text = "RLE (binary)";
-            this.c_RLE_binary_button.UseVisualStyleBackColor = true;
+            this.option_compress_comboBox.FormattingEnabled = true;
+            this.option_compress_comboBox.Items.AddRange(new object[] {
+            "Compress",
+            "Uncompress"});
+            this.option_compress_comboBox.Location = new System.Drawing.Point(244, 32);
+            this.option_compress_comboBox.Name = "option_compress_comboBox";
+            this.option_compress_comboBox.Size = new System.Drawing.Size(121, 24);
+            this.option_compress_comboBox.TabIndex = 10;
             // 
-            // c_RLE_BWT_button
+            // option_compress_label
             // 
-            this.c_RLE_BWT_button.Location = new System.Drawing.Point(270, 281);
-            this.c_RLE_BWT_button.Name = "c_RLE_BWT_button";
-            this.c_RLE_BWT_button.Size = new System.Drawing.Size(75, 55);
-            this.c_RLE_BWT_button.TabIndex = 7;
-            this.c_RLE_BWT_button.Text = "RLE (BWT)";
-            this.c_RLE_BWT_button.UseVisualStyleBackColor = true;
+            this.option_compress_label.AutoSize = true;
+            this.option_compress_label.Location = new System.Drawing.Point(63, 35);
+            this.option_compress_label.Name = "option_compress_label";
+            this.option_compress_label.Size = new System.Drawing.Size(175, 17);
+            this.option_compress_label.TabIndex = 11;
+            this.option_compress_label.Text = "Compress or Uncompress:";
             // 
-            // c_huffman_button
+            // option_algorithm_textbox
             // 
-            this.c_huffman_button.Location = new System.Drawing.Point(411, 281);
-            this.c_huffman_button.Name = "c_huffman_button";
-            this.c_huffman_button.Size = new System.Drawing.Size(75, 55);
-            this.c_huffman_button.TabIndex = 8;
-            this.c_huffman_button.Text = "Huffman Coding";
-            this.c_huffman_button.UseVisualStyleBackColor = true;
+            this.option_algorithm_textbox.FormattingEnabled = true;
+            this.option_algorithm_textbox.Items.AddRange(new object[] {
+            "RLE (binary)",
+            "RLE (BWT)",
+            "Huffman Coding",
+            "Arithmetic Coding"});
+            this.option_algorithm_textbox.Location = new System.Drawing.Point(229, 209);
+            this.option_algorithm_textbox.Name = "option_algorithm_textbox";
+            this.option_algorithm_textbox.Size = new System.Drawing.Size(275, 24);
+            this.option_algorithm_textbox.TabIndex = 12;
             // 
-            // c_arithmetic_button
+            // choose_algorithm_label
             // 
-            this.c_arithmetic_button.Location = new System.Drawing.Point(562, 281);
-            this.c_arithmetic_button.Name = "c_arithmetic_button";
-            this.c_arithmetic_button.Size = new System.Drawing.Size(80, 55);
-            this.c_arithmetic_button.TabIndex = 9;
-            this.c_arithmetic_button.Text = "Arithmetic Coding";
-            this.c_arithmetic_button.UseVisualStyleBackColor = true;
+            this.choose_algorithm_label.AutoSize = true;
+            this.choose_algorithm_label.Location = new System.Drawing.Point(63, 212);
+            this.choose_algorithm_label.Name = "choose_algorithm_label";
+            this.choose_algorithm_label.Size = new System.Drawing.Size(157, 17);
+            this.choose_algorithm_label.TabIndex = 13;
+            this.choose_algorithm_label.Text = "Compression Algorithm:";
+            // 
+            // start_button
+            // 
+            this.start_button.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.start_button.Location = new System.Drawing.Point(292, 276);
+            this.start_button.Name = "start_button";
+            this.start_button.Size = new System.Drawing.Size(230, 65);
+            this.start_button.TabIndex = 14;
+            this.start_button.Text = "Start";
+            this.start_button.UseVisualStyleBackColor = true;
+            this.start_button.Click += new System.EventHandler(this.start_button_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(832, 389);
-            this.Controls.Add(this.c_arithmetic_button);
-            this.Controls.Add(this.c_huffman_button);
-            this.Controls.Add(this.c_RLE_BWT_button);
-            this.Controls.Add(this.c_RLE_binary_button);
+            this.Controls.Add(this.start_button);
+            this.Controls.Add(this.choose_algorithm_label);
+            this.Controls.Add(this.option_algorithm_textbox);
+            this.Controls.Add(this.option_compress_label);
+            this.Controls.Add(this.option_compress_comboBox);
             this.Controls.Add(this.Output_file_textBox);
             this.Controls.Add(this.Input_file_textBox);
             this.Controls.Add(this.output_folder_label);
@@ -158,10 +178,11 @@
         private System.Windows.Forms.Label output_folder_label;
         private System.Windows.Forms.TextBox Input_file_textBox;
         private System.Windows.Forms.TextBox Output_file_textBox;
-        private System.Windows.Forms.Button c_RLE_binary_button;
-        private System.Windows.Forms.Button c_RLE_BWT_button;
-        private System.Windows.Forms.Button c_huffman_button;
-        private System.Windows.Forms.Button c_arithmetic_button;
+        private System.Windows.Forms.ComboBox option_compress_comboBox;
+        private System.Windows.Forms.Label option_compress_label;
+        private System.Windows.Forms.ComboBox option_algorithm_textbox;
+        private System.Windows.Forms.Label choose_algorithm_label;
+        private System.Windows.Forms.Button start_button;
     }
 }
 

@@ -35,7 +35,6 @@ namespace Compressions
             File.WriteAllText(OutputFilename, compressed_fileBytes.ToString());
         }
         private List<int> compress(StringBuilder string_fileBytes, int last_binary, List<int> counted_binary) {
-            StringBuilder compressed_fileBytes = new StringBuilder();
             if (0 == string_fileBytes.Length)
             {
                 return counted_binary;

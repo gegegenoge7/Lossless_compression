@@ -17,16 +17,6 @@ namespace Compressions
             InitializeComponent();
         }
 
-        private void Input_browse_button_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void browse_output_button_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void start_button_Click(object sender, EventArgs e)
         {
             string inputFile = this.Input_file_textBox.Text;

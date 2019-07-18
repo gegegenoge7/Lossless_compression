@@ -21,7 +21,7 @@ namespace Compressions
                 coded_string += entry[entry.Length - 1];
             }
             List<char_freq> compressed_freq = new List<char_freq>();
-            compressed_freq = compress(coded_string, '', compressed_freq);
+            compressed_freq = compress(coded_string, '\0', compressed_freq);
             StringBuilder compressed_fileString = new StringBuilder();
             foreach (char_freq count in compressed_freq)
             {
@@ -36,7 +36,7 @@ namespace Compressions
                 char lastchar = fileString[fileString.Length-1];
                 fileString.TrimEnd();
                 fileString = lastchar + fileString;
-                fileStrings_rotated.Append(fileString);
+                fileStrings_rotated.Add(fileString);
             }
         }
         private List<char_freq> compress(string coded_string, char last_char, List<char_freq> counted_char)
@@ -65,7 +65,7 @@ namespace Compressions
             string[] fileStringSplit = fileString.Split('_');
 
             StringBuilder UncompressedFileString = new StringBuilder();
-            char entry_char = '';
+            char entry_char = '\0';
             foreach (string entry in fileStringSplit)
             {
                 entry_char = entry[0];

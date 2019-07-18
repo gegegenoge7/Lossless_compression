@@ -28,8 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.Input_browse_button = new System.Windows.Forms.Button();
-            this.browse_output_button = new System.Windows.Forms.Button();
             this.input_file_label = new System.Windows.Forms.Label();
             this.output_folder_label = new System.Windows.Forms.Label();
             this.Input_file_textBox = new System.Windows.Forms.TextBox();
@@ -40,26 +38,6 @@
             this.choose_algorithm_label = new System.Windows.Forms.Label();
             this.start_button = new System.Windows.Forms.Button();
             this.SuspendLayout();
-            // 
-            // Input_browse_button
-            // 
-            this.Input_browse_button.Location = new System.Drawing.Point(665, 99);
-            this.Input_browse_button.Name = "Input_browse_button";
-            this.Input_browse_button.Size = new System.Drawing.Size(75, 23);
-            this.Input_browse_button.TabIndex = 0;
-            this.Input_browse_button.Text = "Browse...";
-            this.Input_browse_button.UseVisualStyleBackColor = true;
-            this.Input_browse_button.Click += new System.EventHandler(this.Input_browse_button_Click);
-            // 
-            // browse_output_button
-            // 
-            this.browse_output_button.Location = new System.Drawing.Point(665, 157);
-            this.browse_output_button.Name = "browse_output_button";
-            this.browse_output_button.Size = new System.Drawing.Size(75, 23);
-            this.browse_output_button.TabIndex = 1;
-            this.browse_output_button.Text = "Browse...";
-            this.browse_output_button.UseVisualStyleBackColor = true;
-            this.browse_output_button.Click += new System.EventHandler(this.browse_output_button_Click);
             // 
             // input_file_label
             // 
@@ -161,8 +139,6 @@
             this.Controls.Add(this.Input_file_textBox);
             this.Controls.Add(this.output_folder_label);
             this.Controls.Add(this.input_file_label);
-            this.Controls.Add(this.browse_output_button);
-            this.Controls.Add(this.Input_browse_button);
             this.Name = "Form1";
             this.Text = "Form1";
             this.ResumeLayout(false);
@@ -171,9 +147,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Button Input_browse_button;
-        private System.Windows.Forms.Button browse_output_button;
         private System.Windows.Forms.Label input_file_label;
         private System.Windows.Forms.Label output_folder_label;
         private System.Windows.Forms.TextBox Input_file_textBox;
